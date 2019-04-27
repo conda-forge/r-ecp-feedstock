@@ -1,5 +1,4 @@
-{% set version = '3.0.0' %}
-
+{% set version = '3.1.1' %}
 {% set posix = 'm2-' if win else '' %}
 {% set native = 'm2w64-' if win else '' %}
 
@@ -8,55 +7,70 @@ package:
   version: {{ version|replace("-", "_") }}
 
 source:
-  fn: ecp_{{ version }}.tar.gz
   url:
-    - https://cran.r-project.org/src/contrib/ecp_{{ version }}.tar.gz
-    - https://cran.r-project.org/src/contrib/Archive/ecp/ecp_{{ version }}.tar.gz
-  sha256: 12dc4ccb2b1dfeb652df68c534e2b5150ce1407f152e9a5101f0c6e5ce54076c
+    - {{ cran_mirror }}/src/contrib/ecp_{{ version }}.tar.gz
+    - {{ cran_mirror }}/src/contrib/Archive/ecp/ecp_{{ version }}.tar.gz
+  sha256: d2ab194e22e6ab0168222fbccfcf2e25c6cd51a73edc959086b0c6e0a7410268
 
 build:
   merge_build_host: True  # [win]
-  number: 1001
-  skip: true  # [win32]
-
+  number: 0
   rpaths:
     - lib/R/lib/
     - lib/
 
 requirements:
   build:
-    - posix                # [win]
-    - {{ compiler('c') }}        # [unix]
-    - {{ compiler('m2w64_c') }}  # [win]
-    - {{ compiler('cxx') }}        # [unix]
-    - {{ compiler('m2w64_cxx') }}  # [win]
+    - {{ compiler('c') }}        # [not win]
+    - {{ compiler('cxx') }}      # [not win]
+    - {{native}}toolchain        # [win]
+    - {{posix}}filesystem        # [win]
+    - {{posix}}make
+    - {{posix}}sed               # [win]
+    - {{posix}}coreutils         # [win]
+    - {{posix}}zip               # [win]
   host:
     - r-base
     - r-rcpp
-
   run:
     - r-base
+    - {{native}}gcc-libs         # [win]
     - r-rcpp
 
 test:
   commands:
-    - $R -e "library('ecp')"  # [not win]
+    - $R -e "library('ecp')"           # [not win]
     - "\"%R%\" -e \"library('ecp')\""  # [win]
 
 about:
   home: https://CRAN.R-project.org/package=ecp
   license: GPL (>= 2)
   summary: Implements various procedures for finding  multiple change-points. Two methods make
-    use of dynamic  programming and probabilistic pruning, with no distributional  assumptions
-    other than the existence of certain absolute  moments in one method. Hierarchical
-    and exact search methods  are included. All methods return the set of estimated
-    change- points as well as other summary information.
+    use of dynamic  programming and pruning, with no distributional  assumptions other
+    than the existence of certain absolute  moments in one method. Hierarchical and
+    exact search methods  are included. All methods return the set of estimated change-
+    points as well as other summary information.
   license_family: GPL3
-  license_file: '{{ environ["PREFIX"] }}/lib/R/share/licenses/GPL-3'
+  license_file: '{{ environ["PREFIX"] }}/lib/R/share/licenses/GPL-2'
 
 extra:
   recipe-maintainers:
-    - johanneskoester
-    - bgruening
-    - daler
-    - jdblischak
+    - conda-forge/r
+
+# Package: ecp
+# Type: Package
+# Title: Non-Parametric Multiple Change-Point Analysis of Multivariate Data
+# Version: 3.1.1
+# Date: 2019-03-17
+# Author: Nicholas A. James, Wenyu Zhang and David S. Matteson
+# Maintainer: Wenyu Zhang <wz258@cornell.edu>
+# Description: Implements various procedures for finding  multiple change-points. Two methods make use of dynamic  programming and pruning, with no distributional  assumptions other than the existence of certain absolute  moments in one method. Hierarchical and exact search methods  are included. All methods return the set of estimated change- points as well as other summary information.
+# License: GPL (>= 2)
+# Depends: R (>= 3.00), Rcpp
+# Suggests: mvtnorm, MASS, combinat, R.rsp
+# LinkingTo: Rcpp
+# NeedsCompilation: yes
+# Repository: CRAN
+# VignetteBuilder: R.rsp
+# Packaged: 2019-03-18 03:18:25 UTC; wenyu
+# Date/Publication: 2019-03-18 05:30:07 UTC
