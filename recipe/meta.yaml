@@ -1,4 +1,4 @@
-{% set version = '3.1.1' %}
+{% set version = "3.1.2" %}
 {% set posix = 'm2-' if win else '' %}
 {% set native = 'm2w64-' if win else '' %}
 
@@ -10,11 +10,11 @@ source:
   url:
     - {{ cran_mirror }}/src/contrib/ecp_{{ version }}.tar.gz
     - {{ cran_mirror }}/src/contrib/Archive/ecp/ecp_{{ version }}.tar.gz
-  sha256: d2ab194e22e6ab0168222fbccfcf2e25c6cd51a73edc959086b0c6e0a7410268
+  sha256: de6962af115639212d586a759e26659d60daa9abcf9098ce791fe49e0cbac985
 
 build:
   merge_build_host: True  # [win]
-  number: 1
+  number: 0
   rpaths:
     - lib/R/lib/
     - lib/
