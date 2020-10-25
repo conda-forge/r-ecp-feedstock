@@ -3,7 +3,7 @@ About r-ecp
 
 Home: https://CRAN.R-project.org/package=ecp
 
-Package license: GPL (>= 2)
+Package license: GPL-2.0-or-later
 
 Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/r-ecp-feedstock/blob/master/LICENSE.txt)
 
