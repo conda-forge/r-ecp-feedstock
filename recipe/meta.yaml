@@ -1,4 +1,4 @@
-{% set version = "3.1.2" %}
+{% set version = "3.1.3" %}
 {% set posix = 'm2-' if win else '' %}
 {% set native = 'm2w64-' if win else '' %}
 
@@ -10,11 +10,11 @@ source:
   url:
     - {{ cran_mirror }}/src/contrib/ecp_{{ version }}.tar.gz
     - {{ cran_mirror }}/src/contrib/Archive/ecp/ecp_{{ version }}.tar.gz
-  sha256: de6962af115639212d586a759e26659d60daa9abcf9098ce791fe49e0cbac985
+  sha256: a80ab10bafe30cc96287b9220e44c4b4eda40f5dd0546e4d2a2e1baab514c058
 
 build:
-  merge_build_host: True  # [win]
-  number: 1
+  merge_build_host: true  # [win]
+  number: 0
   rpaths:
     - lib/R/lib/
     - lib/
@@ -45,14 +45,12 @@ test:
 
 about:
   home: https://CRAN.R-project.org/package=ecp
-  license: GPL (>= 2)
-  summary: Implements various procedures for finding  multiple change-points. Two methods make
-    use of dynamic  programming and pruning, with no distributional  assumptions other
-    than the existence of certain absolute  moments in one method. Hierarchical and
-    exact search methods  are included. All methods return the set of estimated change-
-    points as well as other summary information.
+  license: GPL-2.0-or-later
+  summary: Implements various procedures for finding  multiple change-points. Two methods make use of dynamic  programming and pruning, with no distributional  assumptions other than the existence of certain absolute  moments in one method. Hierarchical and exact search methods  are included. All methods return the set of
+    estimated change- points as well as other summary information.
   license_family: GPL3
-  license_file: '{{ environ["PREFIX"] }}/lib/R/share/licenses/GPL-2'
+  license_file:
+    - {{ environ["PREFIX"] }}/lib/R/share/licenses/GPL-2
 
 extra:
   recipe-maintainers:
